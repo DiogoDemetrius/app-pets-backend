@@ -15,6 +15,7 @@ const authService = {
     genero,
     fotoPerfil,
     password,
+    regiao
   }) {
     const user = await Usuario.create({
       nome,
@@ -26,6 +27,7 @@ const authService = {
       genero,
       fotoPerfil,
       password,
+      regiao
     });
     return user;
   },

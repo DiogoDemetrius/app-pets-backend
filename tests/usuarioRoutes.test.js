@@ -1,6 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../app'); // Certifique-se de exportar o app do seu server.js
+const app = require('../app');
 const Usuario = require('../models/Users');
 
 let token;
@@ -12,13 +12,12 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await Usuario.deleteMany({});
+  //await Usuario.deleteMany({});
   await mongoose.connection.close();
 });
 
 describe('Rotas de Usuário', () => {
   const userData = {
-    usuario: "testuser",
     nome: "Test",
     sobreNome: "User",
     email: "testuser@email.com",
@@ -27,7 +26,8 @@ describe('Rotas de Usuário', () => {
     dt_nascimento: "1990-01-01",
     genero: "masculino",
     fotoPerfil: "https://exemplo.com/foto.jpg",
-    password: "senha123"
+    password: "senha123",
+    regiao: "Taguatinga" // Campo obrigatório do seu model
   };
 
   it('Deve registrar um novo usuário', async () => {
@@ -60,7 +60,7 @@ describe('Rotas de Usuário', () => {
     const res = await request(app)
       .put(`/api/usuarios/${userId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send({ nome: "NovoNome" });
+      .send({ nome: "NovoNome", regiao: "Taguatinga" }); // regiao é obrigatório
     expect(res.statusCode).toBe(200);
     expect(res.body.nome).toBe("NovoNome");
   });

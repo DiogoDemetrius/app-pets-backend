@@ -13,6 +13,7 @@ module.exports = {
         genero,
         fotoPerfil,
         password,
+        regiao,
       } = req.body;
 
       const user = await authService.register({
@@ -25,6 +26,7 @@ module.exports = {
         genero,
         fotoPerfil,
         password,
+        regiao,
       });
       return res.status(201).json(user);
     } catch (error) {
