@@ -14,7 +14,7 @@ module.exports = {
   async getPetById(req, res) {
     try {
       const pet = await petService.getPetById(req.params.id);
-      if (!pet) return res.status(404).json({ error: 'Pet não encontrado' });
+      if (!pet) return res.status(404).json({ error: "Pet não encontrado" });
       return res.status(200).json(pet);
     } catch (error) {
       console.error(error);
@@ -45,7 +45,7 @@ module.exports = {
   async deletePet(req, res) {
     try {
       const pet = await petService.deletePet(req.params.id);
-      return res.status(200).json({ message: 'Pet removido com sucesso', pet });
+      return res.status(200).json({ message: "Pet removido com sucesso", pet });
     } catch (error) {
       console.error(error);
       return res.status(400).json({ error: error.message });

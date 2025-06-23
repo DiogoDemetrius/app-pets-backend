@@ -9,6 +9,7 @@ router.put('/usuarios/:id', authMiddleware, UsuarioController.updateUser);
 router.put('/usuarios/:id/senha', authMiddleware, UsuarioController.updatePassword);
 router.post('/usuarios', UsuarioController.registrar);
 router.post('/login', UsuarioController.login);
+router.post('/auth/social-login', UsuarioController.loginSocial);
 router.post('/forgot-password', UsuarioController.forgotPassword);
 router.post('/reset-password', UsuarioController.resetPassword);
 router.get('/me', authMiddleware, UsuarioController.getMe);

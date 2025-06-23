@@ -15,7 +15,7 @@ const authService = {
     genero,
     fotoPerfil,
     password,
-    regiao
+    regiao,
   }) {
     const user = await Usuario.create({
       nome,
@@ -27,7 +27,7 @@ const authService = {
       genero,
       fotoPerfil,
       password,
-      regiao
+      regiao,
     });
     return user;
   },
@@ -103,28 +103,31 @@ const authService = {
     return user;
   },
 
-  async updateUser(userId, updateData) {
-    // Remove campos que não devem ser atualizados diretamente
-    delete updateData.password;
-    delete updateData.resetToken;
-    delete updateData.resetTokenExpires;
+  async loginSocial({ nome, email, fotoPerfil, uid }) {
+    let user = await Usuario.findOne({ email });
 
-    const user = await Usuario.findByIdAndUpdate(
-      userId,
-      { $set: updateData },
-      { new: true }
-    );
-    if (!user) throw new Error("Usuário não encontrado");
-    return user;
-  },
+    // Se o usuário ainda não existir, cria um novo
+    if (!user) {
+      user = await Usuario.create({
+        nome,
+        sobreNome: null,
+        email,
+        cpf: null,
+        telefone: null,
+        dt_nascimento: null,
+        genero: null,
+        fotoPerfil,
+        password: uid, // pode ser UID como valor default fake
+        regiao: null,
+      });
+    }
 
-  async updatePassword(userId, newPassword) {
-    const user = await Usuario.findById(userId);
-    if (!user) throw new Error("Usuário não encontrado");
+    // Gera JWT normalmente
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
-    user.password = newPassword;
-    await user.save();
-    return user;
+    return { user, token };
   },
 };
 
