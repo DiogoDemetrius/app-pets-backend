@@ -118,39 +118,26 @@ module.exports = {
       const { id } = req.params;
       const { newPassword } = req.body;
       const user = await authService.updatePassword(id, newPassword);
-      return res
-        .status(200)
-        .json({ message: "Senha atualizada com sucesso", user });
+      return res.status(200).json({ message: "Senha atualizada com sucesso", user });
     } catch (error) {
       console.error("Erro ao atualizar senha:", error); // Adicionado
       return res.status(400).json({ error: error.message });
     }
   },
 
-  async loginSocial({ nome, email, fotoPerfil, uid }) {
-    let user = await Usuario.findOne({ email });
-
-    // Se o usuário ainda não existir, cria um novo
-    if (!user) {
-      user = await Usuario.create({
+  async loginSocial(req, res) {
+    try {
+      const { nome, email, fotoPerfil, uid } = req.body;
+      const { user, token } = await authService.loginSocial({
         nome,
-        sobreNome: null,
         email,
-        cpf: null,
-        telefone: null,
-        dt_nascimento: null,
-        genero: null,
         fotoPerfil,
-        password: uid, // pode ser UID como valor default fake
-        regiao: null,
+        uid,
       });
+      return res.status(200).json({ user, token });
+    } catch (error) {
+      console.error("Erro ao fazer login social:", error); // Adicionado
+      return res.status(400).json({ error: error.message });
     }
-
-    // Gera JWT normalmente
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-
-    return { user, token };
   },
 };
