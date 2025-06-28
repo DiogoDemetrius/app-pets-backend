@@ -23,10 +23,10 @@ const petService = {
       displasia_coxofemural: pet.displasia_coxofemural,
       consanguinidade: pet.consanguinidade,
       pedigree: pet.pedigree,
-      regiao: pet.regiao,      // <-- adicione estes campos
-      sexo: pet.sexo,          // <-- adicione estes campos
-      cor: pet.cor,            // <-- adicione estes campos
-      status_reproducao: pet.status_reproducao // se for obrigatório
+      regiao: pet.regiao,
+      sexo: pet.sexo,
+      cor: pet.cor,
+      status_reproducao: pet.status_reproducao
     });
     await usuario.save();
 

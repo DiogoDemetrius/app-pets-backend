@@ -15,5 +15,4 @@ router.post('/reset-password', UsuarioController.resetPassword);
 router.get('/me', authMiddleware, UsuarioController.getMe);
 router.get('/allUsers', UsuarioController.getAllUsers);
 
-
 module.exports = router;
