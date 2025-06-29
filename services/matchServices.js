@@ -26,8 +26,6 @@ async function buscarMatchesPet({ raca, sexo, cor, pedigree, displasia_coxofemur
   const candidatos = await Pet.find({
     raca,
     sexo: sexoOposto,
-    cor,
-    // pedigree removido do filtro!
   });
 
   // Filtra por displasia compatível
