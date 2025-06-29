@@ -117,7 +117,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const { newPassword } = req.body;
-      const user = await authService.updatePassword(id, newPassword);
+      const user = await authService.resetPassword(id, newPassword);
       return res.status(200).json({ message: "Senha atualizada com sucesso", user });
     } catch (error) {
       console.error("Erro ao atualizar senha:", error); // Adicionado

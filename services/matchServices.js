@@ -1,8 +1,8 @@
 const Pet = require('../models/Pet');
 
 /**
- * Busca pets compatíveis para cruzamento, considerando raça, sexo oposto, cor, pedigree
- * e regras de displasia coxofemural.
+ * Busca pets compatíveis para cruzamento, considerando raça, sexo oposto, cor
+ * e regras de displasia coxofemural. Permite cruzamento entre pets com e sem pedigree.
  * @param {Object} params - { raca, sexo, cor, pedigree, displasia_coxofemural }
  * @returns {Promise<Array>} - Lista de pets compatíveis
  */
@@ -22,12 +22,12 @@ async function buscarMatchesPet({ raca, sexo, cor, pedigree, displasia_coxofemur
     return false;
   }
 
-  // Busca todos os pets da mesma raça, sexo oposto, cor, pedigree igual
+  // Busca todos os pets da mesma raça, sexo oposto e cor (sem filtrar por pedigree)
   const candidatos = await Pet.find({
     raca,
     sexo: sexoOposto,
     cor,
-    pedigree,
+    // pedigree removido do filtro!
   });
 
   // Filtra por displasia compatível

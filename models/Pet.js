@@ -14,6 +14,7 @@ const PetSchema = new mongoose.Schema(
   {
     nome: { type: String, required: true },
     raca: { type: String, required: true },
+    imagem: { type: String, required: false },
     idade: { type: Number, required: true },
     cor: { type: String, required: true },
     sexo: { type: String, required: true, enum: ["Macho", "Fêmea"] },
